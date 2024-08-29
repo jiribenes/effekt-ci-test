@@ -1,27 +1,34 @@
-# This is a copy-and-past version of ci.yml but additionally creating a release
+# This is a copy-and-paste version of ci.yml but additionally creating a release
 name: Release Artifacts
 
 on:
   push:
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+  workflow_run:
+    workflows: ["Create Version and Tag"] # 'autorelease.yml'
+    types:
+      - completed
+
 jobs:
   build-jar:
-    name: Build Effekt compiler and run tests
+    name: Build the Effekt compiler and run tests
     runs-on: ubuntu-latest
-    steps:
+    outputs:
+      version: ${{ steps.get_version.outputs.VERSION }}
 
-    - uses: actions/checkout@v2
+    steps:
+    - uses: actions/checkout@v3
       with:
         submodules: 'true'
 
     - name: Set up JDK 11
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@v3
       with:
-        java-version: 11
+        java-version: '11'
 
-    - name: Set up NodeJS
-      uses: actions/setup-node@v1
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
       with:
         node-version: '12.x'
 
@@ -39,21 +46,24 @@ jobs:
     - name: Install Chez Scheme
       run: sudo apt-get install chezscheme
 
+    - name: Get the version
+      id: get_version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
     - name: Run tests and assemble jar file
       run: sbt clean deploy
 
-    - id: npmpackage
-      name: Generate npm package
+    - name: Generate npm package
       run: mv $(npm pack) effekt.tgz
 
     - name: Upload Effekt binary
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v3
       with:
         name: effekt
         path: bin/effekt
 
     - name: Upload the npm package
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v3
       with:
         name: effekt-npm-package
         path: effekt.tgz
@@ -63,35 +73,30 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-jar]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@master
-
       - name: Download JAR artifact
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: effekt
           path: distribution/
 
       - name: Download npm package
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: effekt-npm-package
           path: distribution/
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@latest
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          release_name: Prerelease ${{ github.ref }}
-          tag_name: ${{ github.ref }}
-          body: Automatic release for ${{ github.ref }}
+          release_name: Release ${{ needs.build-jar.outputs.version }}
+          tag_name: v${{ needs.build-jar.outputs.version }}
           draft: false
-          prerelease: true
+          prerelease: false
 
       - name: Upload jar file
-        id: upload_jar
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -102,7 +107,6 @@ jobs:
           asset_content_type: application/java-archive
 
       - name: Upload npm package
-        id: upload_npm
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
