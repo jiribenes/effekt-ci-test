@@ -18,7 +18,7 @@ jobs:
         run: |
           MAJOR=0
           DAY_OF_THE_YEAR=$(date +%j)
-          HOUR=$(date +%H)
+          HOUR=$(date +%-H)
           VERSION="${MAJOR}.${DAY_OF_THE_YEAR}.${HOUR}"
           echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
 
