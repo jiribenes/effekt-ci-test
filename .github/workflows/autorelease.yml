@@ -3,7 +3,7 @@ name: Create Version and Tag
 
 on:
   schedule:
-    - cron: '0 */12 * * *'  # at 00:00 and 12:00 UTC
+    - cron: '0 4/6 * * *'  # at 04:00, 10:00, 16:00, 22:00 UTC
 
 jobs:
   calculate-version-and-tag:
