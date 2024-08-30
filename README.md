@@ -1,11 +1,5 @@
 # Ξ Effekt
 
-Testing the changelog!
-
-Compared to other languages with effect handlers (and support for polymorphic effects) the Effekt language
-aims to be significantly more lightweight in its concepts.
-
-
 ## Disclaimer: Use at your own risk
 
 **Effekt is a research-level language. We are actively working on it and the language (and everything else) is very likely to change.**
