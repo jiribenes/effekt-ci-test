@@ -1,5 +1,7 @@
 # Ξ Effekt
 
+Testing the changelog!
+
 Compared to other languages with effect handlers (and support for polymorphic effects) the Effekt language
 aims to be significantly more lightweight in its concepts.
 
