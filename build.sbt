@@ -12,7 +12,7 @@ lazy val assembleJS = taskKey[Unit]("Assemble the JS file in out/effekt.js")
 lazy val assembleBinary = taskKey[Unit]("Assembles the effekt binary in bin/effekt")
 lazy val generateDocumentation = taskKey[Unit]("Generates some documentation.")
 
-lazy val effektVersion = "0.243.22"
+lazy val effektVersion = "0.244.4"
 
 lazy val noPublishSettings = Seq(
   publish := {},
