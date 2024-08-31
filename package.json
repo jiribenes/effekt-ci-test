@@ -1,7 +1,7 @@
 {
   "name": "@effekt-lang/effekt",
   "author": "Jonathan Brachthäuser",
-  "version": "0.244.4",
+  "version": "0.244.10",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/effekt-lang/effekt.git"
