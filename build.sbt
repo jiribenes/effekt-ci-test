@@ -11,7 +11,7 @@ lazy val install = taskKey[Unit]("Installs the current version locally")
 lazy val assembleJS = taskKey[Unit]("Assemble the JS file in out/effekt.js")
 lazy val assembleBinary = taskKey[Unit]("Assembles the effekt binary in bin/effekt")
 lazy val generateDocumentation = taskKey[Unit]("Generates some documentation.")
-lazy val bumpVersion = taskKey[String]("Bumps the minor version number, rewriting this file (used in CI).")
+lazy val bumpVersion = taskKey[Unit]("Bumps the minor version number, rewriting this file (used in CI).")
 
 lazy val effektVersion = "0.246.4"
 
@@ -179,7 +179,7 @@ lazy val effekt: CrossProject = crossProject(JSPlatform, JVMPlatform).in(file("e
         case other => other
       })
 
-      newVersion
+      println(newVersion)
     },
 
     generateDocumentation := TreeDocs.replacer.value,
