@@ -13,7 +13,7 @@ lazy val assembleBinary = taskKey[Unit]("Assembles the effekt binary in bin/effe
 lazy val generateDocumentation = taskKey[Unit]("Generates some documentation.")
 lazy val bumpVersion = taskKey[Unit]("Bumps the minor version number, rewriting this file (used in CI).")
 
-lazy val effektVersion = "0.258.0"
+lazy val effektVersion = "0.261.0"
 
 lazy val noPublishSettings = Seq(
   publish := {},
