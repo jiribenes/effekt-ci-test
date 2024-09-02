@@ -31,7 +31,7 @@ jobs:
           sbt bumpVersion # temporary for testing
           sbt 'bumpVersion' -error # temporary for testing
 
-          new_version=$(sbt 'bumpVersion' -error | tail -n 1)
+          new_version=$(sbt 'bumpVersion' -error)
           echo "New version := ${new_version}"
 
           # Check that the new_version is actually non-empty. If not, crash (exit 1)
