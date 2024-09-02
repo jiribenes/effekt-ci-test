@@ -28,8 +28,18 @@ jobs:
       - name: Bump version using sbt
         id: set-version
         run: |
+          sbt bumpVersion # temporary for testing
+          sbt 'bumpVersion' -error # temporary for testing
+
           new_version=$(sbt 'bumpVersion' -error | tail -n 1)
           echo "New version := ${new_version}"
+
+          # Check that the new_version is actually non-empty. If not, crash (exit 1)
+          if [ -z "$new_version" ]; then
+            echo "Error: Version bump failed. 'new_version' is empty."
+            exit 1
+          fi
+
           echo "VERSION=${new_version}" >> $GITHUB_ENV
 
       - name: Update NPM and MVN versions via sbt
