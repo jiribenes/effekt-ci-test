@@ -29,6 +29,7 @@ jobs:
         id: bump-version
         run: |
           new_version=$(sbt 'bumpVersion' -error | tail -n 1)
+          echo "New version := ${new_version}"
           echo "VERSION=${new_version}" >> $GITHUB_ENV
 
       - name: Update NPM and MVN versions via sbt
