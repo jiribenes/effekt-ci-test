@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: '12.x'
 
-     - name: Bump version using sbt
+      - name: Bump version using sbt
         id: bump-version
         run: |
           new_version=$(sbt 'bumpVersion' -error | tail -n 1)
