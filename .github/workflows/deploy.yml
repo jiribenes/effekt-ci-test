@@ -71,8 +71,11 @@ jobs:
           exit 1
         fi
 
-    - name: Run tests and assemble jar file
-      run: sbt clean deploy
+    - name: Run tests
+      run: sbt clean test
+
+    - name: Assemble jar file
+      run: sbt clean deploy # The 'clean' here is just to be sure, but it forces a recompilation, costing a minute of time
 
     - name: Generate npm package
       run: mv $(npm pack) effekt.tgz
