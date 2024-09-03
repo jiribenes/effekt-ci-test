@@ -45,7 +45,7 @@ jobs:
             exit 1
           fi
 
-          echo "VERSION=${new_version}" >> $GITHUB_ENV
+          echo "VERSION=${new_version}" >> $GITHUB_OUTPUT
           echo "Successfully set new version: ${new_version}"
 
       - name: Update NPM and MVN versions via sbt
