@@ -29,17 +29,19 @@ jobs:
         id: set-version
         run: |
           # Capture the output
-          new_version=$(sbt 'bumpVersion' -error)
+          full_output=$(sbt 'bumpVersion' -error)
 
-          # Trim leading and trailing whitespace (including newlines)
-          new_version=$(echo "$new_version" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+          # Extract the version number using grep
+          new_version=$(echo "$full_output" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | tail -n 1)
 
-          # NOTE: For testing :)
-          echo "New version := ${new_version}"
+          # Trim any potential whitespace
+          new_version=$(echo "$new_version" | xargs)
 
           # Check that the new_version is actually non-empty and looks like a version number
           if [[ ! $new_version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Error: Version bump failed. Invalid version number: '${new_version}'"
+            echo "Full output was:"
+            echo "$full_output"
             exit 1
           fi
 
