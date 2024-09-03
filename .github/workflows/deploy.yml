@@ -15,12 +15,14 @@ jobs:
     name: Build the Effekt compiler and run tests
     runs-on: ubuntu-latest
     if: >
-      ${{ github.event_name == 'push' ||
-      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
-    outputs:
-      version: ${{ steps.get_version.outputs.VERSION }}
-
+      (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
     steps:
+    - name: Check workflow status
+      run: |
+        echo "Event name: ${{ github.event_name }}"
+        echo "Workflow run conclusion: ${{ github.event.workflow_run.conclusion }}"
+
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
