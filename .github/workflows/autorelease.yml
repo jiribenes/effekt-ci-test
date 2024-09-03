@@ -28,9 +28,6 @@ jobs:
       - name: Bump version using sbt
         id: set-version
         run: |
-          # NOTE: JUST FOR TESTING, crash!
-          exit 1
-
           # Capture the output
           full_output=$(sbt 'bumpVersion' -error)
 
