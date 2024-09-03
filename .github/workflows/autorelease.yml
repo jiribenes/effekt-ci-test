@@ -32,7 +32,13 @@ jobs:
           sbt 'bumpVersion' -error # temporary for testing
 
           new_version=$(sbt 'bumpVersion' -error)
-          echo "New version := ${new_version}"
+          echo "New version v1 := ${new_version}"
+
+          new_version=$(sbt 'bumpVersion' -error 2>&1 | tail -n 1)
+          echo "New version v2 := ${new_version}"
+
+          new_version=$(sbt 'bumpVersion' -error 2>&1 | tail -n 1 | tr -d '[:space:]')
+          echo "New version v3 := ${new_version}"
 
           # Check that the new_version is actually non-empty. If not, crash (exit 1)
           if [ -z "$new_version" ]; then
