@@ -53,8 +53,8 @@ jobs:
         echo "Adding mlton to path"
         echo "$GITHUB_WORKSPACE/mlton/bin" >> $GITHUB_PATH
 
-    - name: Install Chez Scheme
-      run: sudo apt-get install chezscheme
+    - name: Install Chez Scheme, LLVM & libuv
+      run: sudo apt-get install -y chezscheme llvm-15 libuv1-dev
 
     - name: Get the version
       id: get_version
