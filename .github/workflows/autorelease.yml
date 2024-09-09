@@ -55,7 +55,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "github-actions[bot]"
-          git add build.sbt
+          git add project/Version.sbt
           git add package.json
           git add pom.xml
           git commit -m "Bump version to ${{ steps.set-version.outputs.VERSION }}"
