@@ -49,6 +49,7 @@ jobs:
         max_attempts: 3
         retry_on: error
         command: sbt clean test
+        new_command_on_retry: sbt testQuick # should only rerun failed tests
 
   calculate-version-and-tag:
     name: Calculate Version and Create Tag
