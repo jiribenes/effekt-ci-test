@@ -3,7 +3,7 @@ name: Create Version and Tag
 
 on:
   schedule:
-    - cron: '0 3,11,15 * * *'  # every day at 03:00, 11:00, 15:00 UTC
+    - cron: '0 3,11,15,19 * * *'  # every day at 03:00, 11:00, 15:00, 19:00 UTC
 
 jobs:
   calculate-version-and-tag:
@@ -28,8 +28,8 @@ jobs:
       - name: Bump version using sbt
         id: set-version
         run: |
-          # Capture the output
-          full_output=$(sbt 'bumpVersion' -error)
+          # Capture the output of 'sbt bumpMinorVersion'
+          full_output=$(sbt 'bumpMinorVersion' -error)
 
           # Extract the version number using grep
           new_version=$(echo "$full_output" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | tail -n 1)
