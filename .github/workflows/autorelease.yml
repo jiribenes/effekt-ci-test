@@ -4,6 +4,7 @@ name: Create Version and Tag
 on:
   schedule:
     - cron: '0 3,11,15,19 * * *'  # every day at 03:00, 11:00, 15:00, 19:00 UTC
+  workflow_dispatch: # For manual triggering
 
 jobs:
   calculate-version-and-tag:
